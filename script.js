@@ -1,22 +1,32 @@
-let character = document.getElementById('character');
-let block = document.getElementById('block');
-const jump = function() {
- if(character.classList !== 'animate'){
-  character.classList.add('animate');
- }
- setTimeout(function(){
-  character.classList.remove('animate');
- }, 500);
-}
-document.addEventListener('click', jump);
+const dino = document.getElementById("dino");
+const cactus = document.getElementById("cactus");
 
-let checkDead = setInterval(function(){
- let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue('top'));
- let blockLeft =
-parseInt(window.getComputedStyle(block).getPropertyValue('left'));
- if(blockLeft<20 && blockLeft > 0 && characterTop >= 130){
-  block.style.animation = 'none';
-  block.style.display = 'none';
-  alert('Game Over');
- };
+function jump() {
+  if (dino.classList != "jump") {
+    dino.classList.add("jump");
+
+    setTimeout(function () {
+      dino.classList.remove("jump");
+    }, 300);
+  }
+}
+
+let isAlive = setInterval(function () {
+  // get current dino Y position
+  let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+
+  // get current cactus X position
+  let cactusLeft = parseInt(
+    window.getComputedStyle(cactus).getPropertyValue("left")
+  );
+
+  // detect collision
+  if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
+    // collision
+    alert("Game Over!");
+  }
 }, 10);
+
+document.addEventListener("keydown", function (event) {
+  jump();
+});
