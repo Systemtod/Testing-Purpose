@@ -6,12 +6,18 @@ const startMessage = document.querySelector("#start-message");
 const gameoverMessage = document.querySelector("#gameover-message");
 
 document.addEventListener("keydown", startGame, { once: true });
-document.addEventListener("touchstart", startGame, { once: true });
 
 /* general variables */
 let lastTime;
 let speedScale;
 let score;
+
+
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+     (navigator.maxTouchPoints > 0) ||
+     (navigator.msMaxTouchPoints > 0));
+}
 
 /* frame update */
 function update(time) { 
@@ -34,6 +40,9 @@ function update(time) {
   lastTime = time;
   window.requestAnimationFrame(update);
 }
+
+
+
 
 function startGame() {
   lastTime = null;
@@ -76,7 +85,6 @@ function handleGameOver() {
   setDinoLose();
   setTimeout(() => {
     document.addEventListener("keydown", startGame, { once: true }); /* prevents accidental click */
-    document.addEventListener("touchstart", startGame, { once: true });
     gameoverMessage.classList.remove("hide");
   }, 100);
 }
@@ -144,8 +152,6 @@ function setupDino() {
   setCustomProperty(dino, "--bottom", 0);
   document.removeEventListener("keydown", onJump); /* reset the dinosaur if the player dies while jumping */
   document.addEventListener("keydown", onJump);
-  document.removeEventListener("touchstart", onJump);
-  document.addEventListener("touchstart", onJump);
 }
 
 function updateDino(delta, speedScale) {
