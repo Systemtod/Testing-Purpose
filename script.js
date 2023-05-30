@@ -6,17 +6,13 @@ const startMessage = document.querySelector("#start-message");
 const gameoverMessage = document.querySelector("#gameover-message");
 
 document.addEventListener("keydown", startGame, { once: true });
+document.addEventListener("touchstart", startGame, { once: true});
 
 /* general variables */
 let lastTime;
 let speedScale;
 let score;
 
-
-function isTouchDevice() {
-  return (('ontouchstart' in window) ||
-     (navigator.maxTouchPoints > 0) ||
-     (navigator.msMaxTouchPoints > 0));
 }
 
 /* frame update */
@@ -84,7 +80,8 @@ function checkGameOver() {
 function handleGameOver() {
   setDinoLose();
   setTimeout(() => {
-    document.addEventListener("keydown", startGame, { once: true }); /* prevents accidental click */
+    document.addEventListener("keydown", startGame, { once: true });
+    document.addEventListener("touchstart", startGame, { once: true });/* prevents accidental click */
     gameoverMessage.classList.remove("hide");
   }, 100);
 }
